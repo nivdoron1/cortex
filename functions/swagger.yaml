@@ -1,0 +1,246 @@
+openapi: 3.0.0
+info:
+  title: Full Stack operation API
+  version: 1.0.0
+  description: API for managing daily traffic records
+
+servers:
+  - url: http://localhost:5001/cortexre-home-task/us-central1/api/v1
+  - url: https://us-central1-cortexre-home-task.cloudfunctions.net/api/v1
+
+tags:
+  - name: Traffic
+    description: Operations related to traffic entries
+
+paths:
+  /traffic/:
+    get:
+      summary: Get all traffic entries
+      operationId: getAllTraffic
+      tags: [Traffic]
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+          description: Page number for pagination
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 5
+          description: Number of items per page
+        - in: query
+          name: sortKey
+          schema:
+            type: string
+            enum: [date, visits,id]
+            default: date
+          description: Field to sort by
+        - in: query
+          name: sortDirection
+          schema:
+            type: string
+            enum: [asc, desc]
+            default: asc
+          description: Sort direction
+        - in: query
+          name: filters
+          schema:
+            type: string
+          description: JSON stringified filter object (e.g., {"minVisits":10,"maxVisits":100,"fromDate":"2024-01-01"})
+      responses:
+        '200':
+          description: List of traffic entries
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginationTraffic'
+
+    post:
+      summary: Create a new traffic entry
+      operationId: createTraffic
+      tags: [Traffic]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewTraffic'
+      responses:
+        '201':
+          description: Entry created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Traffic'
+
+  /traffic/bulk:
+    post:
+      summary: Create multiple traffic entries
+      operationId: bulkCreateTraffic
+      tags: [Traffic]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/NewTraffic'
+      responses:
+        '201':
+          description: Entries created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Traffic'
+
+  /traffic/bulk/update:
+    put:
+      summary: Update multiple traffic entries
+      operationId: bulkUpdateTraffic
+      tags: [Traffic]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Traffic'
+      responses:
+        '200':
+          description: Entries updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  updated:
+                    type: integer
+                    description: Number of entries updated
+
+  /traffic/{id}:
+    get:
+      summary: Get a traffic entry by ID
+      operationId: getTrafficById
+      tags: [Traffic]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Entry ID
+      responses:
+        '200':
+          description: A traffic entry
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Traffic'
+        '404':
+          description: Entry not found
+
+    put:
+      summary: Update a traffic entry by ID
+      operationId: updateTraffic
+      tags: [Traffic]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Entry ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewTraffic'
+      responses:
+        '200':
+          description: Entry updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Traffic'
+
+    delete:
+      summary: Delete a traffic entry by ID
+      operationId: deleteTraffic
+      tags: [Traffic]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Entry ID
+      responses:
+        '204':
+          description: Entry deleted successfully
+
+components:
+  schemas:
+    Traffic:
+      type: object
+      description: A traffic entry with an ID
+      required:
+        - id
+        - date
+        - visits
+      properties:
+        id:
+          type: string
+          example: abc123
+        date:
+          type: string
+          format: date
+          example: 2025-03-01
+        visits:
+          type: integer
+          example: 120
+
+    NewTraffic:
+      type: object
+      description: A new traffic entry to be created or updated
+      required:
+        - date
+        - visits
+      properties:
+        date:
+          type: string
+          format: date
+          example: 2025-03-01
+        visits:
+          type: integer
+          example: 140
+
+    PaginationTraffic:
+      type: object
+      description: Paginated traffic entries
+      required:
+        - data
+        - page
+        - totalItems
+        - totalPages
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Traffic'
+        page:
+          type: integer
+          example: 1
+        totalItems:
+          type: integer
+          example: 100
+        totalPages:
+          type: integer
+          example: 10

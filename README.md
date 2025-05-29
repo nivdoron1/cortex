@@ -9,7 +9,7 @@ This project consists of a full-stack application divided into two main parts:
 
 ## 🔧 Project Structure
 
-```
+```txt
 cortexre home assignment/
 ├── functions/         # Backend (Firebase Functions)
 │   ├── src/
@@ -101,8 +101,6 @@ cortexre home assignment/
    npm run dev
    ```
 
-
-
 ## ✏️ Editor Access Control
 
 Certain routes and actions in the backend are protected and require **editor-level access**. Only users whose email addresses are listed in the `editors.txt` file will be allowed to perform these protected operations (e.g., creating, updating, or deleting resources).
@@ -111,7 +109,7 @@ Certain routes and actions in the backend are protected and require **editor-lev
 
 The list of authorized editor emails is stored in:
 
-```
+```txt
 functions/editors.txt
 ```
 
@@ -166,7 +164,7 @@ Located at the root of the project, the `swagger.sh` script automates the genera
 
 The generated files are saved in:
 
-```
+```txt
 frontend/api/
 ├── api.ts           # Axios-based API functions
 ├── configuration.ts # Axios configuration
@@ -192,8 +190,6 @@ frontend/api/
 This command will regenerate the API types and functions based on the current `swagger.yaml` definition.
 
 > ⚠️ **Note:** Re-run this script whenever you make changes to `swagger.yaml` to keep the frontend types in sync.
-
-
 
 ## ✨ Features
 

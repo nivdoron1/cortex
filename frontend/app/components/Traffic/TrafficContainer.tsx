@@ -14,8 +14,7 @@ import { TrafficApi, type PaginationTraffic, type Traffic } from "~/api/api";
 import TrafficFilters from "./TrafficFilters";
 import { Config } from "~/config";
 import { LinearProgress } from "@mui/material";
-import { toast, ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
 
 function TrafficContainer() {
     const [dataPagination, setDataPagination] = useState<PaginationTraffic>();
@@ -173,7 +172,6 @@ function TrafficContainer() {
             />
 
             <TrafficChart data={filteredData} loading={loading} />
-            <ToastContainer position="top-right" autoClose={3000} />
         </div>
     );
 }

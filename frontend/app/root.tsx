@@ -6,12 +6,14 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
-import { ThemeProvider, CssBaseline, createTheme } from "@mui/material";
+import { ThemeProvider, createTheme } from "@mui/material";
+import toastCss from "react-toastify/dist/ReactToastify.css?url";
 
 import type { Route } from "./+types/root";
 import "./app.css";
 import { AuthProvider } from "./context/AuthContext";
 import Navbar from "./components/NavBar";
+import ToastProvider from "./context/ToastProvider";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -23,6 +25,9 @@ export const links: Route.LinksFunction = () => [
   {
     rel: "stylesheet",
     href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
+  },
+  { rel: "stylesheet", 
+    href: toastCss 
   },
 ];
 
@@ -48,15 +53,15 @@ export default function App() {
   const theme = createTheme();
   return (
     <ThemeProvider theme={theme}>
-        <AuthProvider>
-          <Navbar />
-          <Outlet />
-        </AuthProvider>
-    </ ThemeProvider>
-
+      <ToastProvider>
+      <AuthProvider>
+        <Navbar />
+        <Outlet />
+      </AuthProvider>
+      </ToastProvider>
+    </ThemeProvider>
   );
 }
-
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   let message = "Oops!";

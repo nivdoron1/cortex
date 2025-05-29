@@ -146,7 +146,7 @@ firebase deploy --only functions
 ## 🔄 API Type Generation with Swagger
 
 This project uses a Swagger/OpenAPI YAML file to define the backend API schema and automatically generate TypeScript types and API functions for the frontend.
-You can view the Swagger documentation locally at: <http://localhost:5001/cortexre-home-task/us-central1/api/v1/api-docs>.
+You can view the Swagger documentation locally at: <https://api-phsasxwj4q-uc.a.run.app/api-docs>.
 
 ### 📜 `swagger.sh` Script
 

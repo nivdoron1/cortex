@@ -6,7 +6,7 @@ info:
 
 servers:
   - url: http://localhost:5001/cortexre-home-task/us-central1/api/v1
-  - url: https://us-central1-cortexre-home-task.cloudfunctions.net/api/v1
+  - url: https://api-phsasxwj4q-uc.a.run.app/api/v1
 
 tags:
   - name: Traffic

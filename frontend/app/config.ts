@@ -13,7 +13,8 @@ interface SwaggerConfig {
     useFormData?: boolean;
 }
 
-const BASE_URL = "http://127.0.0.1:5001/cortexre-home-task/us-central1/api/v1";
+//const BASE_URL = "http://127.0.0.1:5001/cortexre-home-task/us-central1/api/v1";
+const BASE_URL = "https://api-phsasxwj4q-uc.a.run.app/api/v1";
 
 const isNode = typeof window === "undefined";
 const formDataCtor = isNode ? FormData : window?.FormData;

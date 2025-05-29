@@ -79,6 +79,6 @@ function requireEditor(
   res.status(403).send("Permission denied");
 }
 
-router.use("/", verifyAuth, requireEditor, versionsRoutes);
+router.use("/api", verifyAuth, requireEditor, versionsRoutes);
 
 export default router;

@@ -1,6 +1,7 @@
 import { auth } from "../firebase";
 import FormData from "form-data";
 import { Configuration } from "./api/configuration";
+import { useAuth } from "./context/AuthContext";
 
 interface SwaggerConfig {
     baseURL?: string;
@@ -24,16 +25,15 @@ export class Config {
         this.config = config;
     }
 
-    static async create(config?: SwaggerConfig): Promise<Config> {
+    static create(config?: SwaggerConfig): Config {
         const headers: Record<string, string> = {
             "Content-Type": config?.useFormData ? "multipart/form-data" : "application/json",
             ...config?.headers,
         };
 
-        const user = auth.currentUser;
-        if (user) {
-            const token = await user.getIdToken();
-            headers["Authorization"] = `Bearer ${token}`;
+        const user = useAuth();
+        if (user?.token) {
+            headers["Authorization"] = `Bearer ${user.token}`;
         }
 
         if (config?.apiKey) {
@@ -54,4 +54,5 @@ export class Config {
 
         return new Config(configuration);
     }
+    
 }

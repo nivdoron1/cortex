@@ -6,6 +6,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
+import { ThemeProvider, CssBaseline, createTheme } from "@mui/material";
 
 import type { Route } from "./+types/root";
 import "./app.css";
@@ -44,11 +45,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+  const theme = createTheme();
   return (
-    <AuthProvider>
-      <Navbar />
-      <Outlet />
-    </AuthProvider>
+    <ThemeProvider theme={theme}>
+        <AuthProvider>
+          <Navbar />
+          <Outlet />
+        </AuthProvider>
+    </ ThemeProvider>
+
   );
 }
 

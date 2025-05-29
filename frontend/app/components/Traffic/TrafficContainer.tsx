@@ -13,6 +13,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { TrafficApi, type PaginationTraffic, type Traffic } from "~/api/api";
 import TrafficFilters from "./TrafficFilters";
 import { Config } from "~/config";
+import { LinearProgress } from "@mui/material";
 
 function TrafficContainer() {
     const [dataPagination, setDataPagination] = useState<PaginationTraffic>();
@@ -26,16 +27,7 @@ function TrafficContainer() {
     const [filters, setFilters] = useState<TrafficFilter>({});
     const [loading, setLoading] = useState<boolean>(false);
 
-    const trafficAPIRef = useRef<TrafficApi | null>(null);
-
-    useEffect(() => {
-        const init = async () => {
-            const config = await Config.create();
-            trafficAPIRef.current = new TrafficApi(config.config);
-            fetchData();
-        };
-        init();
-    }, []);
+    const trafficAPIRef = useRef<TrafficApi | null>(new TrafficApi(Config.create().config));
 
     const fetchData = async () => {
         if (!trafficAPIRef.current) return;
@@ -125,6 +117,8 @@ function TrafficContainer() {
 
     return (
         <div style={{ padding: "2rem" }}>
+            {loading && <LinearProgress sx={{ position: "absolute", top: 0, left: 0, right: 0, zIndex: 9999 }} />}
+
             <Dialog open={formDialogOpen} onClose={() => setFormDialogOpen(false)} maxWidth="sm" fullWidth>
                 <DialogTitle>
                     Edit Entry

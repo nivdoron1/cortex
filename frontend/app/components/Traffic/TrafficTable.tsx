@@ -39,13 +39,6 @@ const TrafficTable: React.FC<Props> = ({
     loading = false,
 }) => (
     <div style={{ position: 'relative' }}>
-        {loading && (
-            <Backdrop open sx={{ position: 'absolute', zIndex: 1 }}>
-                <CircularProgress />
-            </Backdrop>
-        )}
-
-        {/* Scrollable table body */}
         <div style={{ maxHeight: `${ROW_HEIGHT * MAX_ROWS}px`, overflowY: 'auto' }}>
             <Table stickyHeader>
                 <TableHead>
@@ -71,18 +64,36 @@ const TrafficTable: React.FC<Props> = ({
                         <TableCell>Actions</TableCell>
                     </TableRow>
                 </TableHead>
-                <TableBody>
-                    {data.map((entry) => (
-                        <TableRow key={entry.id}>
-                            <TableCell>{new Date(entry.date).toISOString().split("T")[0]}</TableCell>
-                            <TableCell>{entry.visits}</TableCell>
-                            <TableCell>
-                                <IconButton onClick={() => onEdit(entry)}><EditIcon /></IconButton>
-                                <IconButton onClick={() => onDelete(entry.id)}><DeleteIcon /></IconButton>
-                            </TableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
+                {loading ? (
+                    <TableBody>
+                        {Array.from({ length: rowsPerPage }).map((_, i) => (
+                            <TableRow key={`skeleton-${i}`}>
+                                <TableCell colSpan={3}>
+                                    <div style={{
+                                        height: ROW_HEIGHT - 16,
+                                        background: 'linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%)',
+                                        backgroundSize: '200% 100%',
+                                        animation: 'loading-skeleton 1.5s infinite',
+                                        borderRadius: 4
+                                    }} />
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                ) : (
+                    <TableBody>
+                        {data.map((entry) => (
+                            <TableRow key={entry.id}>
+                                <TableCell>{new Date(entry.date).toISOString().split("T")[0]}</TableCell>
+                                <TableCell>{entry.visits}</TableCell>
+                                <TableCell>
+                                    <IconButton onClick={() => onEdit(entry)}><EditIcon /></IconButton>
+                                    <IconButton onClick={() => onDelete(entry.id)}><DeleteIcon /></IconButton>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                )}
             </Table>
         </div>
 
@@ -94,6 +105,10 @@ const TrafficTable: React.FC<Props> = ({
             rowsPerPage={rowsPerPage}
             onRowsPerPageChange={(e) => onRowsPerPageChange(parseInt(e.target.value, 10))}
             rowsPerPageOptions={[5, 10, 25 , 50 , 100]}
+            labelDisplayedRows={({ from, to, count }) => {
+                const totalPages = Math.ceil(count / rowsPerPage);
+                return `${from}–${to} of ${count} (Page ${page + 1} of ${totalPages})`;
+              }}
         />
     </div>
 );

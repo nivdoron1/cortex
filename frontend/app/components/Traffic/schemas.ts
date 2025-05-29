@@ -31,7 +31,7 @@ export const trafficFilterSchema = z
             path: ['maxVisits'],
         }
     );
-// Zod schema definition
+
 export const trafficFormSchema = z.object({
     date: z.string().min(1, "Date is required"),
     visits: z.number().min(0, "Visits must be 0 or more"),

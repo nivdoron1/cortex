@@ -11,7 +11,7 @@ const router = express.Router();
 const editorsFilePath = path.resolve(process.cwd(), "editors.txt");
 const editors = fs.readFileSync(editorsFilePath, "utf-8")
   .split("\n")
-  .map(email => email.trim())
+  .map((email) => email.trim())
   .filter(Boolean) || [];
 
 /** Extending Request type to include user */

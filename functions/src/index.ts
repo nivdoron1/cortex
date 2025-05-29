@@ -1,6 +1,6 @@
 import express from "express";
-import { onRequest } from "firebase-functions/v2/https";
-import type { Request, Response, NextFunction } from "express";
+import {onRequest} from "firebase-functions/v2/https";
+import type {Request, Response, NextFunction} from "express";
 import apiRoutes from "./routes";
 
 import swaggerUi from "swagger-ui-express";
@@ -42,4 +42,4 @@ app.use((req: Request, res: Response): void => {
 });
 
 // Export as Firebase HTTPS function
-export const api = onRequest({ cors: true }, app);
+export const api = onRequest({cors: true}, app);

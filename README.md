@@ -57,10 +57,6 @@ cortexre home assignment/
 
 ---
 
-Here's your updated `README.md` with the `.env.example` section and `cp` command instructions added under the **Frontend (React)** section:
-
----
-
 ## Frontend (React)
 
 1. Navigate to the frontend folder:
@@ -104,7 +100,48 @@ Here's your updated `README.md` with the `.env.example` section and `cp` command
    ```bash
    npm run dev
    ```
-Here's how you can update your `README.md` to include an explanation of the `swagger.sh` script and how it generates frontend types and API functions from the Swagger YAML file.
+
+
+
+## ✏️ Editor Access Control
+
+Certain routes and actions in the backend are protected and require **editor-level access**. Only users whose email addresses are listed in the `editors.txt` file will be allowed to perform these protected operations (e.g., creating, updating, or deleting resources).
+
+### 📄 File Location
+
+The list of authorized editor emails is stored in:
+
+```
+functions/editors.txt
+```
+
+Each line should contain one email address:
+
+```txt
+nivdoron1234@gmail.com
+editor2@example.com
+admin@example.com
+```
+
+### ✅ Adding an Editor
+
+To allow a user to access protected routes:
+
+1. Open the `editors.txt` file located in the `functions/` directory.
+2. Add the user's email on a **new line**.
+3. Save the file.
+4. If you're running locally, restart the server to apply the change.
+5. If you're deploying, redeploy the functions using:
+
+```bash
+firebase deploy --only functions
+```
+
+### 🔐 How It Works
+
+- The backend reads this file during server startup.
+- Requests to protected routes (e.g., `POST`, `PUT`, `PATCH`) are blocked unless the authenticated user's email is found in this list.
+- The file is loaded from disk using Node's `fs` module at runtime.
 
 ---
 
@@ -156,9 +193,7 @@ This command will regenerate the API types and functions based on the current `s
 
 > ⚠️ **Note:** Re-run this script whenever you make changes to `swagger.yaml` to keep the frontend types in sync.
 
----
 
-Let me know if you want me to also create a `.env.example` or update the `.gitignore` to avoid tracking generated files.
 
 ## ✨ Features
 

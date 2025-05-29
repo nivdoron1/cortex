@@ -6,7 +6,6 @@ import {applyWhereFilters} from "./utils";
 export const FirestoreService = <T extends admin.firestore.DocumentData>(collection: string) => {
   return {
     async getAll(options: PaginationOptions = {}): Promise<Pagination<T>> {
-      console.log(options.page);
       const page = options.page ?? 1;
       const limit = Number(options.limit) ?? 5;
       const orderBy = options.orderBy || "date";

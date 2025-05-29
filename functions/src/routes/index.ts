@@ -2,8 +2,17 @@ import express from "express";
 import type {Request, Response, NextFunction} from "express";
 import versionsRoutes from "./versions";
 import {admin} from "../db";
+import fs from "fs";
+import path from "path";
 
 const router = express.Router();
+
+// Load editors.txt once
+const editorsFilePath = path.resolve(process.cwd(), "editors.txt");
+const editors = fs.readFileSync(editorsFilePath, "utf-8")
+  .split("\n")
+  .map(email => email.trim())
+  .filter(Boolean) || [];
 
 /** Extending Request type to include user */
 interface AuthenticatedRequest extends Request {
@@ -56,14 +65,13 @@ function requireEditor(
   next: NextFunction
 ): void {
   const methodsToProtect = ["POST", "PUT", "PATCH"];
-  const editors = ["nivdoron1234@gmail.com"];
 
   if (!methodsToProtect.includes(req.method)) {
     next();
     return;
   }
 
-  if (req.user?.email && editors.includes(req.user.email)) {
+  if (req.user?.email && editors?.includes(req.user.email)) {
     next();
     return;
   }

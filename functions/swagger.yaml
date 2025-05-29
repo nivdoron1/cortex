@@ -18,6 +18,8 @@ paths:
       summary: Get all traffic entries
       operationId: getAllTraffic
       tags: [Traffic]
+      security:
+        - bearerAuth: []
       parameters:
         - in: query
           name: page
@@ -62,6 +64,8 @@ paths:
       summary: Create a new traffic entry
       operationId: createTraffic
       tags: [Traffic]
+      security:
+        - bearerAuth: []
       requestBody:
         required: true
         content:
@@ -81,6 +85,8 @@ paths:
       summary: Create multiple traffic entries
       operationId: bulkCreateTraffic
       tags: [Traffic]
+      security:
+        - bearerAuth: []
       requestBody:
         required: true
         content:
@@ -104,6 +110,8 @@ paths:
       summary: Update multiple traffic entries
       operationId: bulkUpdateTraffic
       tags: [Traffic]
+      security:
+        - bearerAuth: []
       requestBody:
         required: true
         content:
@@ -129,6 +137,8 @@ paths:
       summary: Get a traffic entry by ID
       operationId: getTrafficById
       tags: [Traffic]
+      security:
+        - bearerAuth: []
       parameters:
         - in: path
           name: id
@@ -150,6 +160,8 @@ paths:
       summary: Update a traffic entry by ID
       operationId: updateTraffic
       tags: [Traffic]
+      security:
+        - bearerAuth: []
       parameters:
         - in: path
           name: id
@@ -175,6 +187,8 @@ paths:
       summary: Delete a traffic entry by ID
       operationId: deleteTraffic
       tags: [Traffic]
+      security:
+        - bearerAuth: []
       parameters:
         - in: path
           name: id
@@ -244,3 +258,8 @@ components:
         totalPages:
           type: integer
           example: 10
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

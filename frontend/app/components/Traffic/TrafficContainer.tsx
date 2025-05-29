@@ -14,6 +14,8 @@ import { TrafficApi, type PaginationTraffic, type Traffic } from "~/api/api";
 import TrafficFilters from "./TrafficFilters";
 import { Config } from "~/config";
 import { LinearProgress } from "@mui/material";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function TrafficContainer() {
     const [dataPagination, setDataPagination] = useState<PaginationTraffic>();
@@ -44,6 +46,8 @@ function TrafficContainer() {
             setData(res.data.data || []);
         } catch (err) {
             console.error("Failed to fetch:", err);
+            toast.error("Failed to fetch traffic data");
+
         } finally {
             setLoading(false);
         }
@@ -71,6 +75,7 @@ function TrafficContainer() {
             }
         } catch (err) {
             console.error("Submit failed:", err);
+            toast.error("Failed to submit entry! check if you have permission with the admin");
         } finally {
             setLoading(false);
         }
@@ -84,6 +89,7 @@ function TrafficContainer() {
             setData((prev) => prev.filter((item) => item.id !== id));
         } catch (err) {
             console.error("Delete failed:", err);
+            toast.error("Failed to delete entry! check if you have permission with the admin");
         } finally {
             setLoading(false);
         }
@@ -167,6 +173,7 @@ function TrafficContainer() {
             />
 
             <TrafficChart data={filteredData} loading={loading} />
+            <ToastContainer position="top-right" autoClose={3000} />
         </div>
     );
 }

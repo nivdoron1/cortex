@@ -47,7 +47,7 @@ const { status, data } = await apiInstance.bulkCreateTraffic(
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -97,7 +97,7 @@ const { status, data } = await apiInstance.bulkUpdateTraffic(
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -148,7 +148,7 @@ const { status, data } = await apiInstance.createTraffic(
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -198,7 +198,7 @@ void (empty response body)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -260,7 +260,7 @@ const { status, data } = await apiInstance.getAllTraffic(
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -310,7 +310,7 @@ const { status, data } = await apiInstance.getTrafficById(
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -365,7 +365,7 @@ const { status, data } = await apiInstance.updateTraffic(
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
